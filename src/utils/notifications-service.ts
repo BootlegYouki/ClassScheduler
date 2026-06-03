@@ -63,6 +63,16 @@ export const requestPermissions = async () => {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
+
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F71',
+      });
+    }
+
     return finalStatus === 'granted';
   } catch (e) {
     console.error('Error requesting notification permissions:', e);
@@ -105,14 +115,20 @@ export const syncNotifications = async (classesList: ClassItem[]) => {
             body,
             sound: true,
             data: { classId: cls.id },
+            ...(Platform.OS === 'android' ? { channelId: 'default' } : {}),
           },
-          trigger: {
+          trigger: Platform.OS === 'ios' ? {
             type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
             weekday: trigger.weekday,
             hour: trigger.hour,
             minute: trigger.minute,
             repeats: true,
-          },
+          } : {
+            weekday: trigger.weekday,
+            hour: trigger.hour,
+            minute: trigger.minute,
+            repeats: true,
+          } as any,
         });
       }
     }

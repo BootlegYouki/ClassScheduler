@@ -1519,7 +1519,7 @@
       "label": "syncNotifications()",
       "file_type": "code",
       "source_file": "src/utils/notifications-service.ts",
-      "source_location": "L73",
+      "source_location": "L83",
       "id": "utils_notifications_service_syncnotifications",
       "community": 1,
       "norm_label": "syncnotifications()"
@@ -4552,5 +4552,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "96cbc68495c434c4c17c82c416da36efb1a94003"
+  "built_at_commit": "bd8c3a5e86feb68c02a04249065d0d06f47d744a"
 }
