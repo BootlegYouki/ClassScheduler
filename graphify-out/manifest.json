@@ -1,7 +1,7 @@
 {
   "E:\\Github\\ClassScheduler\\app.json": {
-    "mtime": 1780476244.1797442,
-    "ast_hash": "569b8506e3e4afcfce8d872e40e7fc7d",
+    "mtime": 1780478290.2220297,
+    "ast_hash": "3d2ddd1073311d3ccd04c91d3e03296c",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\App.tsx": {
@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\package.json": {
-    "mtime": 1780476235.5684295,
-    "ast_hash": "62931d3895cad233378b4d99f697281e",
+    "mtime": 1780478314.8474846,
+    "ast_hash": "c9747e1b9aeb0e12cf022b8173b1c15e",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\tsconfig.json": {
