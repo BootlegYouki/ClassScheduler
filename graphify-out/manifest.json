@@ -124,11 +124,6 @@
     "ast_hash": "637776aa6f7496d069afe7520c845c8a",
     "semantic_hash": ""
   },
-  "E:\\Github\\ClassScheduler\\.github\\workflows\\build-ios-ipa.yml": {
-    "mtime": 1780476235.5689454,
-    "ast_hash": "b307a75cadfad64c9bf4753ae180b80b",
-    "semantic_hash": ""
-  },
   "E:\\Github\\ClassScheduler\\assets\\icon.png": {
     "mtime": 1780456482.572227,
     "ast_hash": "2cc38a1ef5e1d1a681ec4bd64f6a05e3",
@@ -164,11 +159,6 @@
     "ast_hash": "199352ef2b1003d2318895dbaaac20d5",
     "semantic_hash": ""
   },
-  "E:\\Github\\ClassScheduler\\.github\\workflows\\build-android-apk.yml": {
-    "mtime": 1780455378.5574698,
-    "ast_hash": "1f6a2d3db1c1e81eea1927338c31622b",
-    "semantic_hash": ""
-  },
   "E:\\Github\\ClassScheduler\\sidestore.json": {
     "mtime": 1780475547.6800263,
     "ast_hash": "99ebd2035a86e60733c06bd978ccf50f",
@@ -177,6 +167,11 @@
   "E:\\Github\\ClassScheduler\\.expo\\web\\cache\\production\\images\\favicon\\favicon-cd66eabf37e195aa52a04ae2b59139367d14bc9170d4ca3222f70ed1316dfad4-contain-transparent\\favicon-48.png": {
     "mtime": 1780475801.9449081,
     "ast_hash": "aa742100c10789129e59480ce7d19b74",
+    "semantic_hash": ""
+  },
+  "E:\\Github\\ClassScheduler\\.github\\workflows\\release.yml": {
+    "mtime": 1780477425.6258113,
+    "ast_hash": "c9a8f5400a4541d259662c25a7166f90",
     "semantic_hash": ""
   }
 }

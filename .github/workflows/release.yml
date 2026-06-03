@@ -1,0 +1,271 @@
+name: Release BootSked (Android & iOS)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bump-version:
+    name: Bump Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.bump_version.outputs.version }}
+      sha: ${{ steps.git_push.outputs.sha }}
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Auto-increment version in app.json
+        id: bump_version
+        run: |
+          node -e "
+            const fs = require('fs');
+            const app = require('./app.json');
+            
+            // Increment version string
+            const currentVersion = app.expo.version || '1.0.0';
+            const parts = currentVersion.split('.').map(Number);
+            if (parts.length === 3) {
+              parts[2] += 1;
+            } else {
+              parts.push(1);
+            }
+            const nextVersion = parts.join('.');
+            app.expo.version = nextVersion;
+
+            // Increment android versionCode
+            if (!app.expo.android) {
+              app.expo.android = {};
+            }
+            const currentVersionCode = app.expo.android.versionCode || 1;
+            const nextVersionCode = currentVersionCode + 1;
+            app.expo.android.versionCode = nextVersionCode;
+
+            fs.writeFileSync('./app.json', JSON.stringify(app, null, 2) + '\n');
+            console.log('Next version calculated:', nextVersion);
+            console.log('Next versionCode calculated:', nextVersionCode);
+            
+            // Output to GitHub Actions Outputs
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'version=' + nextVersion + '\n');
+          "
+
+      - name: Commit and push updated app.json
+        id: git_push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add app.json
+          git commit -m "chore: bump version to v${{ steps.bump_version.outputs.version }} [skip ci]"
+          git push origin main
+          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+  build-android:
+    name: Build Android APK
+    needs: bump-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.bump-version.outputs.sha }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Expo Prebuild (Generate Android folder)
+        run: npx expo prebuild --platform android --clean
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build Android Release APK
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      - name: Prepare APK Artifact
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk BootSked.apk
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: BootSked.apk
+
+  build-ios:
+    name: Build iOS IPA
+    needs: bump-version
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.bump-version.outputs.sha }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Expo Prebuild (Generate iOS folder)
+        run: npx expo prebuild --platform ios --clean
+
+      - name: Install CocoaPods
+        run: |
+          cd ios
+          pod install
+
+      - name: Build Unsigned App
+        run: |
+          cd ios
+          xcodebuild -workspace BootSked.xcworkspace \
+            -scheme BootSked \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
+
+      - name: Package into IPA
+        run: |
+          cd ios/build/Build/Products/Release-iphoneos
+          mkdir Payload
+          mv BootSked.app Payload/
+          zip -qr ../../../../../BootSked.ipa Payload
+
+      - name: Generate SideStore source.json
+        run: |
+          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          REPO="${{ github.repository }}"
+          cat > sidestore.json << EOF
+          {
+            "name": "BootSked",
+            "identifier": "com.bootlegyouki.bootsked.source",
+            "apps": [
+              {
+                "name": "BootSked",
+                "bundleIdentifier": "com.bootlegyouki.bootsked",
+                "developerName": "BootlegYouki",
+                "version": "${{ needs.bump-version.outputs.version }}",
+                "versionDate": "${DATE}",
+                "downloadURL": "https://github.com/${REPO}/releases/download/v${{ needs.bump-version.outputs.version }}/BootSked.ipa",
+                "localizedDescription": "Brutalist template using Native components.",
+                "iconURL": "https://raw.githubusercontent.com/${REPO}/main/assets/icon.png",
+                "tintColor": "00E5FF",
+                "size": 0
+              }
+            ]
+          }
+          EOF
+
+      - name: Upload iOS Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa
+          path: |
+            BootSked.ipa
+            sidestore.json
+
+  create-release:
+    name: Create Unified GitHub Release
+    needs: [bump-version, build-android, build-ios]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.bump-version.outputs.sha }}
+
+      - name: Download Android APK
+        uses: actions/download-artifact@v4
+        with:
+          name: android-apk
+
+      - name: Download iOS IPA
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-ipa
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.bump-version.outputs.version }}
+          name: BootSked v${{ needs.bump-version.outputs.version }}
+          body: |
+            ## BootSked v${{ needs.bump-version.outputs.version }}
+            
+            ### Android Installation
+            Download the `BootSked.apk` file below and install it on your Android device.
+            
+            ### iOS Sideloading (SideStore / Sideloadly / AltStore)
+            Download `BootSked.ipa` below and sideload it.
+            
+            ### SideStore Source URL
+            Add this source to SideStore for auto-updates:
+            ```
+            https://raw.githubusercontent.com/${{ github.repository }}/main/sidestore.json
+            ```
+          files: |
+            BootSked.apk
+            BootSked.ipa
+            sidestore.json
+          draft: false
+          prerelease: false
+
+      - name: Commit and push updated sidestore.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sidestore.json
+          git stash
+          git fetch origin main
+          git rebase origin/main
+          git stash pop
+          git add sidestore.json
+          git diff --staged --quiet || git commit -m "chore: update sidestore.json for v${{ needs.bump-version.outputs.version }} [skip ci]"
+          git push origin main
