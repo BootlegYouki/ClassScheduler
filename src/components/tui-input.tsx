@@ -51,7 +51,7 @@ export const TuiInput: React.FC<TuiInputProps> = ({
     ? colors.primary
     : isDark
     ? colors.primary + '40'
-    : '#000000';
+    : '#D4D4D8';
 
   const backgroundColor = isDark ? '#1C1C1E' : '#FFFFFF';
 

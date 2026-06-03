@@ -220,19 +220,10 @@
       "norm_label": "classitem"
     },
     {
-      "label": "DEFAULT_CLASSES",
-      "file_type": "code",
-      "source_file": "App.tsx",
-      "source_location": "L46",
-      "id": "classscheduler_app_default_classes",
-      "community": 1,
-      "norm_label": "default_classes"
-    },
-    {
       "label": "DAYS_OF_WEEK",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L250",
+      "source_location": "L49",
       "id": "classscheduler_app_days_of_week",
       "community": 1,
       "norm_label": "days_of_week"
@@ -241,7 +232,7 @@
       "label": "getHeaderBgColor()",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L260",
+      "source_location": "L59",
       "id": "classscheduler_app_getheaderbgcolor",
       "community": 1,
       "norm_label": "getheaderbgcolor()"
@@ -250,7 +241,7 @@
       "label": "getHeaderBgColorLight()",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L272",
+      "source_location": "L71",
       "id": "classscheduler_app_getheaderbgcolorlight",
       "community": 1,
       "norm_label": "getheaderbgcolorlight()"
@@ -259,7 +250,7 @@
       "label": "getHeaderLabelColor()",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L284",
+      "source_location": "L83",
       "id": "classscheduler_app_getheaderlabelcolor",
       "community": 1,
       "norm_label": "getheaderlabelcolor()"
@@ -268,7 +259,7 @@
       "label": "DayButtonProps",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L296",
+      "source_location": "L95",
       "id": "classscheduler_app_daybuttonprops",
       "community": 1,
       "norm_label": "daybuttonprops"
@@ -277,16 +268,16 @@
       "label": "DayButton()",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L303",
+      "source_location": "L102",
       "id": "classscheduler_app_daybutton",
-      "community": 0,
+      "community": 1,
       "norm_label": "daybutton()"
     },
     {
       "label": "MainApp()",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L364",
+      "source_location": "L163",
       "id": "classscheduler_app_mainapp",
       "community": 1,
       "norm_label": "mainapp()"
@@ -295,7 +286,7 @@
       "label": "App()",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L1001",
+      "source_location": "L1020",
       "id": "classscheduler_app_app",
       "community": 1,
       "norm_label": "app()"
@@ -304,7 +295,7 @@
       "label": "styles",
       "file_type": "code",
       "source_file": "App.tsx",
-      "source_location": "L1020",
+      "source_location": "L1039",
       "id": "classscheduler_app_styles",
       "community": 1,
       "norm_label": "styles"
@@ -724,6 +715,42 @@
       "norm_label": "typescript"
     },
     {
+      "label": "sidestore.json",
+      "file_type": "code",
+      "source_file": "sidestore.json",
+      "source_location": "L1",
+      "id": "sidestore_json",
+      "community": 17,
+      "norm_label": "sidestore.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "sidestore.json",
+      "source_location": "L2",
+      "id": "classscheduler_sidestore_name",
+      "community": 17,
+      "norm_label": "name"
+    },
+    {
+      "label": "identifier",
+      "file_type": "code",
+      "source_file": "sidestore.json",
+      "source_location": "L3",
+      "id": "classscheduler_sidestore_identifier",
+      "community": 17,
+      "norm_label": "identifier"
+    },
+    {
+      "label": "apps",
+      "file_type": "code",
+      "source_file": "sidestore.json",
+      "source_location": "L4",
+      "id": "classscheduler_sidestore_apps",
+      "community": 17,
+      "norm_label": "apps"
+    },
+    {
       "label": "tsconfig.json",
       "file_type": "code",
       "source_file": "tsconfig.json",
@@ -999,7 +1026,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L1",
       "id": "src_components_tui_chart_tsx",
-      "community": 0,
+      "community": 9,
       "norm_label": "tui-chart.tsx"
     },
     {
@@ -1008,7 +1035,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L10",
       "id": "components_tui_chart_tuiprogressmeterprops",
-      "community": 0,
+      "community": 9,
       "norm_label": "tuiprogressmeterprops"
     },
     {
@@ -1017,7 +1044,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L19",
       "id": "components_tui_chart_tuiprogressmeter",
-      "community": 0,
+      "community": 9,
       "norm_label": "tuiprogressmeter()"
     },
     {
@@ -1026,7 +1053,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L80",
       "id": "components_tui_chart_metersegment",
-      "community": 0,
+      "community": 9,
       "norm_label": "metersegment"
     },
     {
@@ -1035,7 +1062,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L85",
       "id": "components_tui_chart_tuisegmentedmeterprops",
-      "community": 0,
+      "community": 9,
       "norm_label": "tuisegmentedmeterprops"
     },
     {
@@ -1044,7 +1071,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L99",
       "id": "components_tui_chart_tuisegmentedmeter",
-      "community": 0,
+      "community": 9,
       "norm_label": "tuisegmentedmeter()"
     },
     {
@@ -1053,7 +1080,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L281",
       "id": "components_tui_chart_chartitem",
-      "community": 0,
+      "community": 9,
       "norm_label": "chartitem"
     },
     {
@@ -1062,7 +1089,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L290",
       "id": "components_tui_chart_tuibarchartprops",
-      "community": 0,
+      "community": 9,
       "norm_label": "tuibarchartprops"
     },
     {
@@ -1071,7 +1098,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L295",
       "id": "components_tui_chart_tuibarchart",
-      "community": 0,
+      "community": 9,
       "norm_label": "tuibarchart()"
     },
     {
@@ -1080,7 +1107,7 @@
       "source_file": "src/components/tui-chart.tsx",
       "source_location": "L350",
       "id": "components_tui_chart_styles",
-      "community": 0,
+      "community": 9,
       "norm_label": "styles"
     },
     {
@@ -1125,7 +1152,7 @@
       "source_file": "src/components/tui-container.tsx",
       "source_location": "L1",
       "id": "src_components_tui_container_tsx",
-      "community": 5,
+      "community": 0,
       "norm_label": "tui-container.tsx"
     },
     {
@@ -1134,7 +1161,7 @@
       "source_file": "src/components/tui-container.tsx",
       "source_location": "L6",
       "id": "components_tui_container_tuicontainerprops",
-      "community": 5,
+      "community": 0,
       "norm_label": "tuicontainerprops"
     },
     {
@@ -1143,7 +1170,7 @@
       "source_file": "src/components/tui-container.tsx",
       "source_location": "L17",
       "id": "components_tui_container_tuicontainer",
-      "community": 5,
+      "community": 0,
       "norm_label": "tuicontainer()"
     },
     {
@@ -1152,7 +1179,7 @@
       "source_file": "src/components/tui-container.tsx",
       "source_location": "L105",
       "id": "components_tui_container_styles",
-      "community": 5,
+      "community": 0,
       "norm_label": "styles"
     },
     {
@@ -1161,7 +1188,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L1",
       "id": "src_components_tui_drawer_tsx",
-      "community": 17,
+      "community": 0,
       "norm_label": "tui-drawer.tsx"
     },
     {
@@ -1170,7 +1197,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L8",
       "id": "components_tui_drawer_spring_config_open",
-      "community": 17,
+      "community": 0,
       "norm_label": "spring_config_open"
     },
     {
@@ -1179,7 +1206,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L15",
       "id": "components_tui_drawer_tuidrawerprops",
-      "community": 17,
+      "community": 0,
       "norm_label": "tuidrawerprops"
     },
     {
@@ -1188,7 +1215,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L23",
       "id": "components_tui_drawer_tuidrawer",
-      "community": 17,
+      "community": 0,
       "norm_label": "tuidrawer()"
     },
     {
@@ -1197,7 +1224,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L152",
       "id": "components_tui_drawer_styles",
-      "community": 17,
+      "community": 0,
       "norm_label": "styles"
     },
     {
@@ -1278,7 +1305,7 @@
       "source_file": "src/components/tui-nav.tsx",
       "source_location": "L1",
       "id": "src_components_tui_nav_tsx",
-      "community": 9,
+      "community": 1,
       "norm_label": "tui-nav.tsx"
     },
     {
@@ -1287,7 +1314,7 @@
       "source_file": "src/components/tui-nav.tsx",
       "source_location": "L8",
       "id": "components_tui_nav_screentype",
-      "community": 9,
+      "community": 1,
       "norm_label": "screentype"
     },
     {
@@ -1296,7 +1323,7 @@
       "source_file": "src/components/tui-nav.tsx",
       "source_location": "L10",
       "id": "components_tui_nav_tuitabbarprops",
-      "community": 9,
+      "community": 1,
       "norm_label": "tuitabbarprops"
     },
     {
@@ -1305,7 +1332,7 @@
       "source_file": "src/components/tui-nav.tsx",
       "source_location": "L17",
       "id": "components_tui_nav_tuitabbar",
-      "community": 9,
+      "community": 1,
       "norm_label": "tuitabbar()"
     },
     {
@@ -1314,7 +1341,7 @@
       "source_file": "src/components/tui-nav.tsx",
       "source_location": "L123",
       "id": "components_tui_nav_styles",
-      "community": 9,
+      "community": 1,
       "norm_label": "styles"
     },
     {
@@ -1323,7 +1350,7 @@
       "source_file": "src/components/tui-skeleton.tsx",
       "source_location": "L1",
       "id": "src_components_tui_skeleton_tsx",
-      "community": 5,
+      "community": 0,
       "norm_label": "tui-skeleton.tsx"
     },
     {
@@ -1332,7 +1359,7 @@
       "source_file": "src/components/tui-skeleton.tsx",
       "source_location": "L9",
       "id": "components_tui_skeleton_tuiskeletonloader",
-      "community": 5,
+      "community": 0,
       "norm_label": "tuiskeletonloader()"
     },
     {
@@ -1341,7 +1368,7 @@
       "source_file": "src/components/tui-skeleton.tsx",
       "source_location": "L284",
       "id": "components_tui_skeleton_styles",
-      "community": 5,
+      "community": 0,
       "norm_label": "styles"
     },
     {
@@ -1413,7 +1440,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L1",
       "id": "src_theme_theme_provider_tsx",
-      "community": 5,
+      "community": 0,
       "norm_label": "theme-provider.tsx"
     },
     {
@@ -1422,7 +1449,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L5",
       "id": "theme_theme_provider_thememode",
-      "community": 5,
+      "community": 0,
       "norm_label": "thememode"
     },
     {
@@ -1431,7 +1458,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L6",
       "id": "theme_theme_provider_accenttheme",
-      "community": 5,
+      "community": 0,
       "norm_label": "accenttheme"
     },
     {
@@ -1440,7 +1467,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L8",
       "id": "theme_theme_provider_themecolors",
-      "community": 5,
+      "community": 0,
       "norm_label": "themecolors"
     },
     {
@@ -1449,7 +1476,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L26",
       "id": "theme_theme_provider_themecontexttype",
-      "community": 5,
+      "community": 0,
       "norm_label": "themecontexttype"
     },
     {
@@ -1458,7 +1485,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L36",
       "id": "theme_theme_provider_accent_colors",
-      "community": 5,
+      "community": 0,
       "norm_label": "accent_colors"
     },
     {
@@ -1467,7 +1494,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L45",
       "id": "theme_theme_provider_themecontext",
-      "community": 5,
+      "community": 0,
       "norm_label": "themecontext"
     },
     {
@@ -1476,7 +1503,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L47",
       "id": "theme_theme_provider_themeprovider",
-      "community": 5,
+      "community": 0,
       "norm_label": "themeprovider()"
     },
     {
@@ -1703,6 +1730,15 @@
       "id": "expo_readme_md",
       "community": 16,
       "norm_label": "readme.md"
+    },
+    {
+      "label": "DEFAULT_CLASSES",
+      "file_type": "code",
+      "source_file": "App.tsx",
+      "source_location": "L46",
+      "community": 1,
+      "norm_label": "default_classes",
+      "id": "classscheduler_app_default_classes"
     },
     {
       "label": "MONTH_NAMES",
@@ -3042,6 +3078,36 @@
       "confidence_score": 1.0,
       "source": "classscheduler_package_devdependencies",
       "target": "classscheduler_package_devdependencies_typescript"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidestore.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sidestore_json",
+      "target": "classscheduler_sidestore_apps"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidestore.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sidestore_json",
+      "target": "classscheduler_sidestore_identifier"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidestore.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sidestore_json",
+      "target": "classscheduler_sidestore_name"
     },
     {
       "relation": "contains",
@@ -4609,5 +4675,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9287d4d5420c9ed265dcb19c3056967cb571243a"
+  "built_at_commit": "2ac28414c5b53077ddfe1cb4ff7006103d91ca6e"
 }

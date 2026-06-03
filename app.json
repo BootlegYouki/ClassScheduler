@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "ClassScheduler",
-    "slug": "class-scheduler",
+    "name": "BootSked",
+    "slug": "boot-sked",
     "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bootlegyouki.classscheduler"
+      "bundleIdentifier": "com.bootlegyouki.bootsked"
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +17,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "versionCode": 4,
-      "package": "com.bootlegyouki.classscheduler",
+      "package": "com.bootlegyouki.bootsked",
       "permissions": [
         "android.permission.SCHEDULE_EXACT_ALARM",
         "android.permission.USE_EXACT_ALARM",

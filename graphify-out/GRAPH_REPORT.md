@@ -1,16 +1,16 @@
 # Graph Report - ClassScheduler  (2026-06-03)
 
 ## Corpus Check
-- 28 files · ~14,690 words
+- 29 files · ~14,780 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 195 nodes · 274 edges · 18 communities (15 shown, 3 thin omitted)
+- 199 nodes · 277 edges · 18 communities (15 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9287d4d5`
+- Built from commit: `2ac28414`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -48,22 +48,22 @@
   App.tsx → src/theme/theme-provider.tsx
 - `MainApp()` --calls--> `useTheme()`  [EXTRACTED]
   App.tsx → src/theme/theme-provider.tsx
-- `TuiCalendar()` --calls--> `useTheme()`  [EXTRACTED]
-  src/components/tui-calendar.tsx → src/theme/theme-provider.tsx
 - `TuiSegmentedMeter()` --calls--> `useTheme()`  [EXTRACTED]
   src/components/tui-chart.tsx → src/theme/theme-provider.tsx
-- `TuiContainer()` --calls--> `useTheme()`  [EXTRACTED]
-  src/components/tui-container.tsx → src/theme/theme-provider.tsx
+- `TuiCalendar()` --calls--> `useTheme()`  [EXTRACTED]
+  src/components/tui-calendar.tsx → src/theme/theme-provider.tsx
+- `TuiProgressMeter()` --calls--> `useTheme()`  [EXTRACTED]
+  src/components/tui-chart.tsx → src/theme/theme-provider.tsx
 
 ## Communities (18 total, 3 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.09
-Nodes (28): DayButton(), styles, TuiButton(), TuiButtonProps, ChartItem, MeterSegment, styles, TuiBarChart() (+20 more)
+Cohesion: 0.08
+Nodes (34): styles, TuiButton(), TuiButtonProps, styles, TuiCheckbox(), TuiCheckboxProps, styles, TuiContainer() (+26 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.10
-Nodes (22): ClassItem, DAY_NAMES_SHORT, DAY_NAMES_SUNDAY_START, DayButtonProps, DAYS_OF_WEEK, DEFAULT_CLASSES, getHeaderBgColor(), getHeaderBgColorLight() (+14 more)
+Cohesion: 0.08
+Nodes (27): ClassItem, DAY_NAMES_SHORT, DAY_NAMES_SUNDAY_START, DayButton(), DayButtonProps, DAYS_OF_WEEK, DEFAULT_CLASSES, getHeaderBgColor() (+19 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.09
@@ -78,8 +78,8 @@ Cohesion: 0.13
 Nodes (14): author, main, name, private, scripts, android, format, ios (+6 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.10
-Nodes (17): MONTHS, styles, TuiCalendar(), TuiCalendarProps, WEEKDAYS, styles, TuiContainer(), TuiContainerProps (+9 more)
+Cohesion: 0.33
+Nodes (5): MONTHS, styles, TuiCalendar(), TuiCalendarProps, WEEKDAYS
 
 ### Community 6 - "Community 6"
 Cohesion: 0.17
@@ -94,19 +94,19 @@ Cohesion: 0.20
 Nodes (7): appJsonPath, fs, packageJsonPath, path, rootDir, slug, workflowPath
 
 ### Community 9 - "Community 9"
-Cohesion: 0.40
-Nodes (4): ScreenType, styles, TuiTabBar(), TuiTabBarProps
+Cohesion: 0.20
+Nodes (9): ChartItem, MeterSegment, styles, TuiBarChart(), TuiBarChartProps, TuiProgressMeter(), TuiProgressMeterProps, TuiSegmentedMeter() (+1 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.40
 Nodes (4): compilerOptions, strict, exclude, extends
 
 ### Community 17 - "Community 17"
-Cohesion: 0.40
-Nodes (4): SPRING_CONFIG_OPEN, styles, TuiDrawer(), TuiDrawerProps
+Cohesion: 0.50
+Nodes (3): apps, identifier, name
 
 ## Knowledge Gaps
-- **122 isolated node(s):** `name`, `slug`, `version`, `orientation`, `icon` (+117 more)
+- **125 isolated node(s):** `name`, `slug`, `version`, `orientation`, `icon` (+120 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -114,16 +114,16 @@ Nodes (4): SPRING_CONFIG_OPEN, styles, TuiDrawer(), TuiDrawerProps
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `Community 3` to `Community 4`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `useTheme()` connect `Community 0` to `Community 1`, `Community 5`, `Community 17`, `Community 9`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+- **Why does `useTheme()` connect `Community 0` to `Community 1`, `Community 5`, `Community 9`?**
+  _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `Community 7` to `Community 4`?**
   _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **What connects `name`, `slug`, `version` to the rest of the system?**
-  _122 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _125 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.09243697478991597 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08350951374207188 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.09971509971509972 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08143939393939394 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._

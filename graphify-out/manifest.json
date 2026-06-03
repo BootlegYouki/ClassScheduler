@@ -1,12 +1,12 @@
 {
   "E:\\Github\\ClassScheduler\\app.json": {
-    "mtime": 1780474451.5899522,
-    "ast_hash": "3fe0181ffdda372fbc931ac49074b943",
+    "mtime": 1780476244.1797442,
+    "ast_hash": "569b8506e3e4afcfce8d872e40e7fc7d",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\App.tsx": {
-    "mtime": 1780474141.3888757,
-    "ast_hash": "76d4e9ccf871bcceb686c954a4465ad7",
+    "mtime": 1780477141.3024933,
+    "ast_hash": "65a516dfd08691527d392213d67380b2",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\eslint.config.js": {
@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\package.json": {
-    "mtime": 1780474536.4679666,
-    "ast_hash": "9a28e4b4481546446fef65610decf561",
+    "mtime": 1780476235.5684295,
+    "ast_hash": "62931d3895cad233378b4d99f697281e",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\tsconfig.json": {
@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\src\\components\\tui-input.tsx": {
-    "mtime": 1780410101.7364728,
-    "ast_hash": "e34b0e2996a1d51bc105cbfe076994b4",
+    "mtime": 1780475853.3140173,
+    "ast_hash": "aaae76d2335b02bc7f32c9dcb08ccd1f",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\src\\components\\tui-nav.tsx": {
@@ -125,7 +125,7 @@
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\.github\\workflows\\build-ios-ipa.yml": {
-    "mtime": 1780450298.5851657,
+    "mtime": 1780476235.5689454,
     "ast_hash": "b307a75cadfad64c9bf4753ae180b80b",
     "semantic_hash": ""
   },
@@ -167,6 +167,16 @@
   "E:\\Github\\ClassScheduler\\.github\\workflows\\build-android-apk.yml": {
     "mtime": 1780455378.5574698,
     "ast_hash": "1f6a2d3db1c1e81eea1927338c31622b",
+    "semantic_hash": ""
+  },
+  "E:\\Github\\ClassScheduler\\sidestore.json": {
+    "mtime": 1780475547.6800263,
+    "ast_hash": "99ebd2035a86e60733c06bd978ccf50f",
+    "semantic_hash": ""
+  },
+  "E:\\Github\\ClassScheduler\\.expo\\web\\cache\\production\\images\\favicon\\favicon-cd66eabf37e195aa52a04ae2b59139367d14bc9170d4ca3222f70ed1316dfad4-contain-transparent\\favicon-48.png": {
+    "mtime": 1780475801.9449081,
+    "ast_hash": "aa742100c10789129e59480ce7d19b74",
     "semantic_hash": ""
   }
 }

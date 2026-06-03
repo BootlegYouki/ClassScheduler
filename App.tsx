@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, Animated, ScrollView, Pressable, Platform, Modal } from 'react-native';
+import { StyleSheet, View, Animated, ScrollView, Pressable, Platform, Modal, Alert } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -16,14 +16,14 @@ import { TuiContainer } from './src/components/tui-container';
 import { TuiButton } from './src/components/tui-button';
 import { TuiDrawer } from './src/components/tui-drawer';
 import { TuiInput } from './src/components/tui-input';
-import { Sun, Moon } from 'lucide-react-native';
+import { Sun, Moon, Bell } from 'lucide-react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { requestPermissions, syncNotifications } from './src/utils/notifications-service';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
     shouldShowBanner: true,
@@ -43,209 +43,8 @@ interface ClassItem {
   day: string; // e.g. "Monday", "Tuesday", etc.
 }
 
-const DEFAULT_CLASSES: ClassItem[] = [
-  {
-    id: '8',
-    subject: 'CS-102',
-    name: 'Object Oriented Programming',
-    time: '09:00 AM - 10:30 AM',
-    room: 'Room 303',
-    teacher: 'Prof. James Gosling',
-    day: 'Monday',
-  },
-  {
-    id: '9',
-    subject: 'MATH-101',
-    name: 'Calculus I',
-    time: '11:00 AM - 12:30 PM',
-    room: 'Room 201',
-    teacher: 'Dr. Isaac Newton',
-    day: 'Monday',
-  },
-  {
-    id: '10',
-    subject: 'PHYS-101',
-    name: 'General Physics I',
-    time: '02:00 PM - 03:30 PM',
-    room: 'Lab 1A',
-    teacher: 'Dr. Albert Einstein',
-    day: 'Monday',
-  },
-  {
-    id: '11',
-    subject: 'ENG-201',
-    name: 'Technical Writing',
-    time: '09:00 AM - 10:30 AM',
-    room: 'Room 102',
-    teacher: 'Dr. William Shakespeare',
-    day: 'Tuesday',
-  },
-  {
-    id: '12',
-    subject: 'MATH-301',
-    name: 'Probability & Statistics',
-    time: '11:00 AM - 12:30 PM',
-    room: 'Room 203',
-    teacher: 'Dr. Carl Friedrich Gauss',
-    day: 'Tuesday',
-  },
-  {
-    id: '13',
-    subject: 'CS-202',
-    name: 'Database Management Systems',
-    time: '02:00 PM - 03:30 PM',
-    room: 'Room 404',
-    teacher: 'Dr. Edgar F. Codd',
-    day: 'Tuesday',
-  },
-  // Wednesday (Exactly 10 classes)
-  {
-    id: '18',
-    subject: 'BIO-201',
-    name: 'General Biology II',
-    time: '07:30 AM - 09:00 AM',
-    room: 'Lab 4A',
-    teacher: 'Dr. Charles Darwin',
-    day: 'Wednesday',
-  },
-  {
-    id: '1',
-    subject: 'CS-101',
-    name: 'Introduction to Computer Science',
-    time: '09:00 AM - 10:30 AM',
-    room: 'Room 402',
-    teacher: 'Prof. Alan Turing',
-    day: 'Wednesday',
-  },
-  {
-    id: '19',
-    subject: 'ENG-101',
-    name: 'English Composition',
-    time: '10:30 AM - 11:00 AM',
-    room: 'Room 102',
-    teacher: 'Dr. William Shakespeare',
-    day: 'Wednesday',
-  },
-  {
-    id: '2',
-    subject: 'MATH-202',
-    name: 'Linear Algebra',
-    time: '11:00 AM - 12:30 PM',
-    room: 'Room 101',
-    teacher: 'Dr. Ada Lovelace',
-    day: 'Wednesday',
-  },
-  {
-    id: '20',
-    subject: 'ART-102',
-    name: 'History of Art',
-    time: '12:30 PM - 01:30 PM',
-    room: 'Studio B',
-    teacher: 'Prof. Leonardo da Vinci',
-    day: 'Wednesday',
-  },
-  {
-    id: '5',
-    subject: 'CS-204',
-    name: 'Data Structures & Algorithms',
-    time: '01:30 PM - 03:00 PM',
-    room: 'Room 204',
-    teacher: 'Dr. Donald Knuth',
-    day: 'Wednesday',
-  },
-  {
-    id: '21',
-    subject: 'HIST-202',
-    name: 'Modern History',
-    time: '03:00 PM - 03:30 PM',
-    room: 'Room 105',
-    teacher: 'Dr. Herodotus',
-    day: 'Wednesday',
-  },
-  {
-    id: '6',
-    subject: 'CHEM-101',
-    name: 'General Chemistry',
-    time: '03:30 PM - 05:00 PM',
-    room: 'Chem Lab 1',
-    teacher: 'Dr. Marie Curie',
-    day: 'Wednesday',
-  },
-  {
-    id: '7',
-    subject: 'CS-302',
-    name: 'Operating Systems',
-    time: '05:30 PM - 07:00 PM',
-    room: 'Room 501',
-    teacher: 'Dr. Grace Hopper',
-    day: 'Wednesday',
-  },
-  {
-    id: '22',
-    subject: 'PHYS-202',
-    name: 'Thermodynamics',
-    time: '07:00 PM - 08:30 PM',
-    room: 'Room 201',
-    teacher: 'Dr. Richard Feynman',
-    day: 'Wednesday',
-  },
-  // Thursday
-  {
-    id: '3',
-    subject: 'PHYS-301',
-    name: 'Quantum Mechanics',
-    time: '02:00 PM - 03:30 PM',
-    room: 'Lab 2B',
-    teacher: 'Dr. Richard Feynman',
-    day: 'Thursday',
-  },
-  {
-    id: '14',
-    subject: 'CS-401',
-    name: 'Artificial Intelligence',
-    time: '09:00 AM - 10:30 AM',
-    room: 'Lab 3C',
-    teacher: 'Dr. John McCarthy',
-    day: 'Thursday',
-  },
-  {
-    id: '15',
-    subject: 'BIO-101',
-    name: 'General Biology',
-    time: '11:00 AM - 12:30 PM',
-    room: 'Lab 4A',
-    teacher: 'Dr. Charles Darwin',
-    day: 'Thursday',
-  },
-  // Friday
-  {
-    id: '4',
-    subject: 'LIT-110',
-    name: 'Creative Writing Seminar',
-    time: '04:00 PM - 05:30 PM',
-    room: 'Auditorium C',
-    teacher: 'Prof. Toni Morrison',
-    day: 'Friday',
-  },
-  {
-    id: '16',
-    subject: 'ART-101',
-    name: 'Art Appreciation',
-    time: '02:00 PM - 03:30 PM',
-    room: 'Studio B',
-    teacher: 'Prof. Leonardo da Vinci',
-    day: 'Friday',
-  },
-  {
-    id: '17',
-    subject: 'HIST-101',
-    name: 'World History',
-    time: '09:00 AM - 10:30 AM',
-    room: 'Room 105',
-    teacher: 'Dr. Herodotus',
-    day: 'Friday',
-  },
-];
+// Initial empty classes list
+
 
 const DAYS_OF_WEEK = [
   { name: 'Sunday', short: 'Sun', letter: 'S' },
@@ -318,8 +117,8 @@ const DayButton: React.FC<DayButtonProps> = ({ shortLabel, dateNumber, isActive,
           backgroundColor: isActive
             ? (isDark ? colors.primary + '20' : colors.primary + '15')
             : pressed
-            ? (isDark ? '#27272A' : '#E4E4E7')
-            : colors.card,
+              ? (isDark ? '#27272A' : '#E4E4E7')
+              : colors.card,
         },
       ]}
     >
@@ -372,8 +171,16 @@ function MainApp() {
   const splashOpacity = useRef(new Animated.Value(1)).current;
 
   // App States
-  const [classes, setClasses] = useState<ClassItem[]>(DEFAULT_CLASSES);
-  
+  const [classes, setClasses] = useState<ClassItem[]>([]);
+  const [classesLoaded, setClassesLoaded] = useState(false);
+  const [editingClassId, setEditingClassId] = useState<string | null>(null);
+
+  // iOS Picker Layout Measurements (for segmented borders with transparent text bg)
+  const [fromCardWidth, setFromCardWidth] = useState(0);
+  const [fromLegendWidth, setFromLegendWidth] = useState(0);
+  const [toCardWidth, setToCardWidth] = useState(0);
+  const [toLegendWidth, setToLegendWidth] = useState(0);
+
   // Selected Day State
   const [selectedDay, setSelectedDay] = useState<string>(() => {
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -382,7 +189,7 @@ function MainApp() {
 
   // Add Class Drawer States
   const [drawerVisible, setDrawerVisible] = useState(false);
-  
+
   const [newSubject, setNewSubject] = useState('');
   const [newName, setNewName] = useState('');
   const [newRoom, setNewRoom] = useState('');
@@ -427,10 +234,37 @@ function MainApp() {
     requestPermissions();
   }, []);
 
-  // Sync scheduled notifications whenever classes list changes
+  // Load classes on mount
   useEffect(() => {
-    syncNotifications(classes);
-  }, [classes]);
+    const loadClasses = async () => {
+      try {
+        const savedClasses = await AsyncStorage.getItem('classes');
+        if (savedClasses) {
+          setClasses(JSON.parse(savedClasses));
+        }
+      } catch (e) {
+        console.error('Failed to load classes', e);
+      } finally {
+        setClassesLoaded(true);
+      }
+    };
+    loadClasses();
+  }, []);
+
+  // Save classes and sync scheduled notifications whenever classes list changes (after loading)
+  useEffect(() => {
+    if (classesLoaded) {
+      const saveAndSync = async () => {
+        try {
+          await AsyncStorage.setItem('classes', JSON.stringify(classes));
+        } catch (e) {
+          console.error('Failed to save classes', e);
+        }
+        syncNotifications(classes);
+      };
+      saveAndSync();
+    }
+  }, [classes, classesLoaded]);
 
   // Hide native splash screen once resources are loaded
   useEffect(() => {
@@ -462,6 +296,7 @@ function MainApp() {
   // Close Drawer
   const handleCloseDrawer = () => {
     setDrawerVisible(false);
+    setEditingClassId(null);
     // Reset form states
     setNewSubject('');
     setNewName('');
@@ -482,8 +317,68 @@ function MainApp() {
     setShowToPicker(false);
   };
 
-  // Add Class Submission
-  const handleAddClass = () => {
+  // Helper to parse time string (e.g. "09:00 AM") into a Date object
+  const parseTimeStrToDate = (timeStr: string) => {
+    const d = new Date();
+    try {
+      const parts = timeStr.trim().split(' ');
+      if (parts.length === 2) {
+        const [time, modifier] = parts;
+        let [hours, minutes] = time.split(':').map(Number);
+        if (modifier === 'PM' && hours < 12) {
+          hours += 12;
+        }
+        if (modifier === 'AM' && hours === 12) {
+          hours = 0;
+        }
+        d.setHours(hours, minutes, 0, 0);
+      }
+    } catch (e) {
+      console.error('Failed to parse time string', timeStr, e);
+    }
+    return d;
+  };
+
+  // Edit Class Click Handler
+  const handleEditClass = (cls: ClassItem) => {
+    setEditingClassId(cls.id);
+    setNewName(cls.name);
+    setNewSubject(cls.subject);
+    setNewRoom(cls.room);
+    setNewTeacher(cls.teacher === 'TBA' ? '' : cls.teacher);
+
+    const timeParts = cls.time.split(' - ');
+    if (timeParts.length === 2) {
+      setFromTime(parseTimeStrToDate(timeParts[0]));
+      setToTime(parseTimeStrToDate(timeParts[1]));
+    }
+    setDrawerVisible(true);
+  };
+
+  // Delete Class Handler (Long Press)
+  const handleLongPressDelete = (cls: ClassItem) => {
+    Alert.alert(
+      'Delete Schedule',
+      `Are you sure you want to delete ${cls.name} (${cls.subject})?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            setClasses(prev => prev.filter(item => item.id !== cls.id));
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  // Add or Update Class Submission
+  const handleAddOrUpdateClass = () => {
     if (!newSubject || !newName || !newRoom) {
       setFormError('Subject, Title, and Room are required');
       return;
@@ -494,17 +389,34 @@ function MainApp() {
       return;
     }
 
-    const newClass: ClassItem = {
-      id: String(Date.now()),
-      subject: newSubject.trim().toUpperCase(),
-      name: newName.trim(),
-      time: `${formatTimeStr(fromTime)} - ${formatTimeStr(toTime)}`,
-      room: newRoom.trim(),
-      teacher: newTeacher.trim() || 'TBA',
-      day: selectedDay,
-    };
+    if (editingClassId) {
+      setClasses(prev => prev.map(cls => {
+        if (cls.id === editingClassId) {
+          return {
+            ...cls,
+            subject: newSubject.trim().toUpperCase(),
+            name: newName.trim(),
+            time: `${formatTimeStr(fromTime)} - ${formatTimeStr(toTime)}`,
+            room: newRoom.trim(),
+            teacher: newTeacher.trim() || 'TBA',
+            day: selectedDay,
+          };
+        }
+        return cls;
+      }));
+    } else {
+      const newClass: ClassItem = {
+        id: String(Date.now()),
+        subject: newSubject.trim().toUpperCase(),
+        name: newName.trim(),
+        time: `${formatTimeStr(fromTime)} - ${formatTimeStr(toTime)}`,
+        room: newRoom.trim(),
+        teacher: newTeacher.trim() || 'TBA',
+        day: selectedDay,
+      };
+      setClasses(prev => [...prev, newClass]);
+    }
 
-    setClasses(prev => [...prev, newClass]);
     handleCloseDrawer();
   };
 
@@ -514,10 +426,10 @@ function MainApp() {
     const today = new Date();
     const currentDayIndex = today.getDay(); // 0 (Sun) to 6 (Sat)
     const targetDayIndex = weekdays.indexOf(targetWeekdayName);
-    
+
     // Difference in days
     const diff = targetDayIndex - currentDayIndex;
-    
+
     const targetDate = new Date(today);
     targetDate.setDate(today.getDate() + diff);
     return targetDate;
@@ -531,11 +443,11 @@ function MainApp() {
   const getHeaderDateText = (weekdayName: string) => {
     const today = new Date();
     const targetDate = getDateOfWeekday(weekdayName);
-    
+
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const month = months[targetDate.getMonth()];
     const date = targetDate.getDate();
-    
+
     if (targetDate.toDateString() === today.toDateString()) {
       return `Today, ${month} ${date}`;
     } else {
@@ -563,7 +475,7 @@ function MainApp() {
   const getActiveHighlightId = (dayClasses: ClassItem[], weekdayName: string) => {
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const todayName = weekdays[new Date().getDay()];
-    
+
     if (weekdayName !== todayName || dayClasses.length === 0) {
       return null;
     }
@@ -615,7 +527,22 @@ function MainApp() {
   const filteredClasses = classes.filter(cls => cls.day === selectedDay);
   const highlightedClassId = getActiveHighlightId(filteredClasses, selectedDay);
 
-
+  // Trigger immediate test notification
+  const handleTestNotification = async () => {
+    try {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Notification Test",
+          body: "Class Scheduler notifications are working perfectly!",
+          sound: true,
+          ...(Platform.OS === 'android' ? { channelId: 'default' } : {}),
+        },
+        trigger: null, // null triggers immediately
+      });
+    } catch (e) {
+      console.error('Failed to trigger test notification', e);
+    }
+  };
 
   if (loading) {
     return null;
@@ -672,22 +599,37 @@ function MainApp() {
             </TuiText>
           </View>
 
-          <Pressable
-            onPress={() => setThemeMode(isDark ? 'light' : 'dark')}
-            style={({ pressed }) => [
-              styles.settingsBtn,
-              {
-                borderColor: colors.primary,
-                backgroundColor: pressed ? colors.primary + '20' : colors.card,
-              }
-            ]}
-          >
-            {isDark ? (
-              <Sun size={16} color={colors.foreground} />
-            ) : (
-              <Moon size={16} color={colors.foreground} />
-            )}
-          </Pressable>
+          <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+            <Pressable
+              onPress={handleTestNotification}
+              style={({ pressed }) => [
+                styles.settingsBtn,
+                {
+                  borderColor: colors.primary,
+                  backgroundColor: pressed ? colors.primary + '20' : colors.card,
+                }
+              ]}
+            >
+              <Bell size={16} color={colors.foreground} />
+            </Pressable>
+
+            <Pressable
+              onPress={() => setThemeMode(isDark ? 'light' : 'dark')}
+              style={({ pressed }) => [
+                styles.settingsBtn,
+                {
+                  borderColor: colors.primary,
+                  backgroundColor: pressed ? colors.primary + '20' : colors.card,
+                }
+              ]}
+            >
+              {isDark ? (
+                <Sun size={16} color={colors.foreground} />
+              ) : (
+                <Moon size={16} color={colors.foreground} />
+              )}
+            </Pressable>
+          </View>
         </View>
 
         {/* Date Selector Row */}
@@ -727,25 +669,36 @@ function MainApp() {
 
         {filteredClasses.length > 0 ? (
           filteredClasses.map((cls, idx) => (
-            <TuiContainer
+            <Pressable
               key={cls.id}
-              label={cls.subject}
-              badge={cls.room}
-              style={styles.classCard}
-              accentBorder={cls.id === highlightedClassId}
+              onPress={() => handleEditClass(cls)}
+              onLongPress={() => handleLongPressDelete(cls)}
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.75 : 1,
+                  transform: [{ scale: pressed ? 0.99 : 1 }],
+                }
+              ]}
             >
-              <TuiText weight="bold" size="lg" style={{ color: colors.primary }}>
-                {cls.name}
-              </TuiText>
-              <View style={styles.classMetaRow}>
-                <TuiText size="sm" weight="bold">
-                  {cls.time}
+              <TuiContainer
+                label={cls.subject}
+                badge={cls.room}
+                style={styles.classCard}
+                accentBorder={cls.id === highlightedClassId}
+              >
+                <TuiText weight="bold" size="lg" style={{ color: colors.primary }}>
+                  {cls.name}
                 </TuiText>
-              </View>
-              <TuiText size="xs" variant="muted" style={{ marginTop: 4 }}>
-                Instructor: {cls.teacher}
-              </TuiText>
-            </TuiContainer>
+                <View style={styles.classMetaRow}>
+                  <TuiText size="sm" weight="bold">
+                    {cls.time}
+                  </TuiText>
+                </View>
+                <TuiText size="xs" variant="muted" style={{ marginTop: 4 }}>
+                  Instructor: {cls.teacher}
+                </TuiText>
+              </TuiContainer>
+            </Pressable>
           ))
         ) : (
           <View style={[styles.emptyContainer, { borderColor: colors.primary + '30' }]}>
@@ -763,11 +716,11 @@ function MainApp() {
         startAnimation={true}
       />
 
-      {/* ADD CLASS MODAL DRAWER */}
+      {/* ADD/EDIT CLASS MODAL DRAWER */}
       <TuiDrawer
         visible={drawerVisible}
         onClose={handleCloseDrawer}
-        title="ADD CLASS SCHEDULE"
+        title={editingClassId ? "EDIT CLASS SCHEDULE" : "ADD CLASS SCHEDULE"}
       >
         <TuiInput
           label="Subject Name"
@@ -884,13 +837,46 @@ function MainApp() {
               onPress={() => setShowFromPicker(false)}
             />
             <View style={styles.iosFloatingPickerWrapper}>
-              <View style={[styles.iosFloatingPickerCard, { borderColor: colors.primary, backgroundColor: colors.card }]}>
-                <View style={[styles.floatingLegendWrapper, { backgroundColor: colors.card }]}>
+              <View
+                onLayout={(e) => setFromCardWidth(e.nativeEvent.layout.width)}
+                style={[
+                  styles.iosFloatingPickerCard,
+                  {
+                    borderColor: colors.primary,
+                    backgroundColor: colors.card,
+                    borderTopWidth: 0,
+                  }
+                ]}
+              >
+                {/* Segmented Top Borders */}
+                <View
+                  style={[
+                    styles.borderTopLeft,
+                    {
+                      backgroundColor: colors.primary,
+                      width: Math.max(0, (fromCardWidth - fromLegendWidth) / 2)
+                    }
+                  ]}
+                />
+                <View
+                  style={[
+                    styles.borderTopRight,
+                    {
+                      backgroundColor: colors.primary,
+                      left: Math.max(0, (fromCardWidth + fromLegendWidth) / 2)
+                    }
+                  ]}
+                />
+
+                <View
+                  onLayout={(e) => setFromLegendWidth(e.nativeEvent.layout.width)}
+                  style={styles.floatingLegendWrapper}
+                >
                   <TuiText weight="bold" style={{ color: colors.primary }}>
                     Start Time
                   </TuiText>
                 </View>
-                
+
                 <DateTimePicker
                   value={fromTime}
                   mode="time"
@@ -901,7 +887,7 @@ function MainApp() {
                     if (date) setFromTime(date);
                   }}
                 />
-                
+
                 <TuiButton
                   variant="outline"
                   onPress={() => setShowFromPicker(false)}
@@ -926,13 +912,46 @@ function MainApp() {
               onPress={() => setShowToPicker(false)}
             />
             <View style={styles.iosFloatingPickerWrapper}>
-              <View style={[styles.iosFloatingPickerCard, { borderColor: colors.primary, backgroundColor: colors.card }]}>
-                <View style={[styles.floatingLegendWrapper, { backgroundColor: colors.card }]}>
+              <View
+                onLayout={(e) => setToCardWidth(e.nativeEvent.layout.width)}
+                style={[
+                  styles.iosFloatingPickerCard,
+                  {
+                    borderColor: colors.primary,
+                    backgroundColor: colors.card,
+                    borderTopWidth: 0,
+                  }
+                ]}
+              >
+                {/* Segmented Top Borders */}
+                <View
+                  style={[
+                    styles.borderTopLeft,
+                    {
+                      backgroundColor: colors.primary,
+                      width: Math.max(0, (toCardWidth - toLegendWidth) / 2)
+                    }
+                  ]}
+                />
+                <View
+                  style={[
+                    styles.borderTopRight,
+                    {
+                      backgroundColor: colors.primary,
+                      left: Math.max(0, (toCardWidth + toLegendWidth) / 2)
+                    }
+                  ]}
+                />
+
+                <View
+                  onLayout={(e) => setToLegendWidth(e.nativeEvent.layout.width)}
+                  style={styles.floatingLegendWrapper}
+                >
                   <TuiText weight="bold" style={{ color: colors.primary }}>
                     End Time
                   </TuiText>
                 </View>
-                
+
                 <DateTimePicker
                   value={toTime}
                   mode="time"
@@ -943,7 +962,7 @@ function MainApp() {
                     if (date) setToTime(date);
                   }}
                 />
-                
+
                 <TuiButton
                   variant="outline"
                   onPress={() => setShowToPicker(false)}
@@ -968,8 +987,8 @@ function MainApp() {
           <TuiButton variant="outline" style={{ flex: 1 }} onPress={handleCloseDrawer}>
             Cancel
           </TuiButton>
-          <TuiButton variant="accent" style={{ flex: 1 }} onPress={handleAddClass}>
-            Save Schedule
+          <TuiButton variant="accent" style={{ flex: 1 }} onPress={handleAddOrUpdateClass}>
+            {editingClassId ? 'Save Changes' : 'Save Schedule'}
           </TuiButton>
         </View>
       </TuiDrawer>
