@@ -2,7 +2,7 @@
   "expo": {
     "name": "ClassScheduler",
     "slug": "class-scheduler",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -15,7 +15,9 @@
         "backgroundColor": "#121212",
         "foregroundImage": "./assets/icon.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "versionCode": 2,
+      "package": "com.bootlegyouki.classscheduler"
     },
     "web": {
       "favicon": "./assets/icon.png"
