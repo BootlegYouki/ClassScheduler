@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, View, Animated, ScrollView, Pressable, Platform, Modal } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
   JetBrainsMono_400Regular,
@@ -32,8 +31,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// Keep the native splash screen visible while fonts load
-SplashScreen.preventAutoHideAsync().catch(() => { });
+
 
 interface ClassItem {
   id: string;
@@ -437,7 +435,6 @@ function MainApp() {
   // Hide native splash screen once resources are loaded
   useEffect(() => {
     if (dataLoaded && !loading) {
-      SplashScreen.hideAsync().catch(() => { });
       setIsAppReady(true);
     }
   }, [dataLoaded, loading]);

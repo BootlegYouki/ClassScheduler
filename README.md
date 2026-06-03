@@ -64,8 +64,7 @@ All components are styled using high-contrast borders, solid black drop shadows,
 *   `<SplashIcon>`: Clean vector rendering of a retro terminal cursor prompt (`>_`) used for loading and splash transitions.
 
 ### 🌅 Internal Animated Splash Screen
-The application features a custom, double-layer boot splash screen:
-- **Native Splash Screen**: `expo-splash-screen` handles initial drawing while the device environment mounts.
+The application features a custom boot splash screen:
 - **Animated Splash Overlay**: A full-screen `<SplashIcon>` TUI prompt overlay loads with a simulated 800ms loading sequence and fades out smoothly to prevent visual layout popping once the application views are ready.
 
 ### Theme & Colors (`src/theme/`)
