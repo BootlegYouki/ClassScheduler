@@ -1,7 +1,7 @@
 {
   "E:\\Github\\ClassScheduler\\app.json": {
-    "mtime": 1780720154.2343934,
-    "ast_hash": "3f8908bde13035494a59b2416804dd13",
+    "mtime": 1780720834.121853,
+    "ast_hash": "43964b432ca7ebbcfa1ca88c16b92c06",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\App.tsx": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\.github\\workflows\\release.yml": {
-    "mtime": 1780478629.0217462,
-    "ast_hash": "eb0f68ea799f866ae5da4ac093e2570a",
+    "mtime": 1780720822.9826708,
+    "ast_hash": "cf6408a43bc0a5de61609c3a6373fb33",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\assets\\adaptive-icon-monochrome.png": {

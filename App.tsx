@@ -544,7 +544,7 @@ function MainApp() {
     }
   };
 
-  if (loading) {
+  if (!isAppReady) {
     return null;
   }
 
