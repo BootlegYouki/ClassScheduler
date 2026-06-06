@@ -1,12 +1,12 @@
 {
   "E:\\Github\\ClassScheduler\\app.json": {
-    "mtime": 1780720834.121853,
-    "ast_hash": "43964b432ca7ebbcfa1ca88c16b92c06",
+    "mtime": 1780721705.308802,
+    "ast_hash": "3d99af6f352e9762677dc5e76651a7a3",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\App.tsx": {
-    "mtime": 1780719475.0479417,
-    "ast_hash": "64837887b32934546a6cd0c89e6f0ba2",
+    "mtime": 1780722416.1846619,
+    "ast_hash": "317d211e878d39c0772831b4f8e4b034",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\eslint.config.js": {
@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\package.json": {
-    "mtime": 1780719425.6283352,
-    "ast_hash": "f3dda43286a01085ff7ef80a7e08b162",
+    "mtime": 1780722414.0453894,
+    "ast_hash": "5728e6dbe38243892999542641deff71",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\tsconfig.json": {
@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\sidestore.json": {
-    "mtime": 1780475547.6800263,
-    "ast_hash": "99ebd2035a86e60733c06bd978ccf50f",
+    "mtime": 1780722178.3653305,
+    "ast_hash": "4907b9e86563f038177d8c7bb75db7b3",
     "semantic_hash": ""
   },
   "E:\\Github\\ClassScheduler\\.expo\\web\\cache\\production\\images\\favicon\\favicon-cd66eabf37e195aa52a04ae2b59139367d14bc9170d4ca3222f70ed1316dfad4-contain-transparent\\favicon-48.png": {

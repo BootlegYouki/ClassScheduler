@@ -643,10 +643,19 @@
       "norm_label": "expo-status-bar"
     },
     {
-      "label": "lucide-react-native",
+      "label": "expo-system-ui",
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L29",
+      "id": "classscheduler_package_dependencies_expo_system_ui",
+      "community": 3,
+      "norm_label": "expo-system-ui"
+    },
+    {
+      "label": "lucide-react-native",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L30",
       "id": "classscheduler_package_dependencies_lucide_react_native",
       "community": 3,
       "norm_label": "lucide-react-native"
@@ -655,7 +664,7 @@
       "label": "react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "id": "classscheduler_package_dependencies_react",
       "community": 3,
       "norm_label": "react"
@@ -664,7 +673,7 @@
       "label": "react-dom",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "id": "classscheduler_package_dependencies_react_dom",
       "community": 3,
       "norm_label": "react-dom"
@@ -673,7 +682,7 @@
       "label": "react-native",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "id": "classscheduler_package_dependencies_react_native",
       "community": 3,
       "norm_label": "react-native"
@@ -682,7 +691,7 @@
       "label": "react-native-safe-area-context",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L34",
       "id": "classscheduler_package_dependencies_react_native_safe_area_context",
       "community": 3,
       "norm_label": "react-native-safe-area-context"
@@ -691,7 +700,7 @@
       "label": "react-native-svg",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L35",
       "id": "classscheduler_package_dependencies_react_native_svg",
       "community": 3,
       "norm_label": "react-native-svg"
@@ -700,7 +709,7 @@
       "label": "react-native-web",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L35",
+      "source_location": "L36",
       "id": "classscheduler_package_dependencies_react_native_web",
       "community": 3,
       "norm_label": "react-native-web"
@@ -709,90 +718,90 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L37",
+      "source_location": "L38",
       "id": "classscheduler_package_devdependencies",
-      "community": 7,
+      "community": 4,
       "norm_label": "devdependencies"
     },
     {
       "label": "@eslint/js",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L39",
       "id": "classscheduler_package_devdependencies_eslint_js",
-      "community": 7,
+      "community": 4,
       "norm_label": "@eslint/js"
     },
     {
       "label": "@types/node",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L40",
       "id": "classscheduler_package_devdependencies_types_node",
-      "community": 7,
+      "community": 4,
       "norm_label": "@types/node"
     },
     {
       "label": "@types/react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L40",
+      "source_location": "L41",
       "id": "classscheduler_package_devdependencies_types_react",
-      "community": 7,
+      "community": 4,
       "norm_label": "@types/react"
     },
     {
       "label": "eslint",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L41",
+      "source_location": "L42",
       "id": "classscheduler_package_devdependencies_eslint",
-      "community": 7,
+      "community": 4,
       "norm_label": "eslint"
     },
     {
       "label": "eslint-plugin-react-hooks",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L42",
+      "source_location": "L43",
       "id": "classscheduler_package_devdependencies_eslint_plugin_react_hooks",
-      "community": 7,
+      "community": 4,
       "norm_label": "eslint-plugin-react-hooks"
     },
     {
       "label": "eslint-plugin-react-refresh",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L43",
+      "source_location": "L44",
       "id": "classscheduler_package_devdependencies_eslint_plugin_react_refresh",
-      "community": 7,
+      "community": 4,
       "norm_label": "eslint-plugin-react-refresh"
     },
     {
       "label": "globals",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L44",
+      "source_location": "L45",
       "id": "classscheduler_package_devdependencies_globals",
-      "community": 7,
+      "community": 4,
       "norm_label": "globals"
     },
     {
       "label": "prettier",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L45",
+      "source_location": "L46",
       "id": "classscheduler_package_devdependencies_prettier",
-      "community": 7,
+      "community": 4,
       "norm_label": "prettier"
     },
     {
       "label": "typescript",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L46",
+      "source_location": "L47",
       "id": "classscheduler_package_devdependencies_typescript",
-      "community": 7,
+      "community": 4,
       "norm_label": "typescript"
     },
     {
@@ -990,7 +999,7 @@
       "source_file": "src/components/tui-button.tsx",
       "source_location": "L1",
       "id": "src_components_tui_button_tsx",
-      "community": 9,
+      "community": 0,
       "norm_label": "tui-button.tsx"
     },
     {
@@ -999,7 +1008,7 @@
       "source_file": "src/components/tui-button.tsx",
       "source_location": "L6",
       "id": "components_tui_button_tuibuttonprops",
-      "community": 9,
+      "community": 0,
       "norm_label": "tuibuttonprops"
     },
     {
@@ -1008,7 +1017,7 @@
       "source_file": "src/components/tui-button.tsx",
       "source_location": "L14",
       "id": "components_tui_button_tuibutton",
-      "community": 9,
+      "community": 0,
       "norm_label": "tuibutton()"
     },
     {
@@ -1017,7 +1026,7 @@
       "source_file": "src/components/tui-button.tsx",
       "source_location": "L89",
       "id": "components_tui_button_styles",
-      "community": 9,
+      "community": 0,
       "norm_label": "styles"
     },
     {
@@ -1242,7 +1251,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L1",
       "id": "src_components_tui_drawer_tsx",
-      "community": 0,
+      "community": 7,
       "norm_label": "tui-drawer.tsx"
     },
     {
@@ -1251,7 +1260,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L8",
       "id": "components_tui_drawer_spring_config_open",
-      "community": 0,
+      "community": 7,
       "norm_label": "spring_config_open"
     },
     {
@@ -1260,7 +1269,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L15",
       "id": "components_tui_drawer_tuidrawerprops",
-      "community": 0,
+      "community": 7,
       "norm_label": "tuidrawerprops"
     },
     {
@@ -1269,7 +1278,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L23",
       "id": "components_tui_drawer_tuidrawer",
-      "community": 0,
+      "community": 7,
       "norm_label": "tuidrawer()"
     },
     {
@@ -1278,7 +1287,7 @@
       "source_file": "src/components/tui-drawer.tsx",
       "source_location": "L152",
       "id": "components_tui_drawer_styles",
-      "community": 0,
+      "community": 7,
       "norm_label": "styles"
     },
     {
@@ -1287,7 +1296,7 @@
       "source_file": "src/components/tui-header.tsx",
       "source_location": "L1",
       "id": "src_components_tui_header_tsx",
-      "community": 9,
+      "community": 0,
       "norm_label": "tui-header.tsx"
     },
     {
@@ -1296,7 +1305,7 @@
       "source_file": "src/components/tui-header.tsx",
       "source_location": "L6",
       "id": "components_tui_header_tuiheaderprops",
-      "community": 9,
+      "community": 0,
       "norm_label": "tuiheaderprops"
     },
     {
@@ -1305,7 +1314,7 @@
       "source_file": "src/components/tui-header.tsx",
       "source_location": "L14",
       "id": "components_tui_header_tuiheader",
-      "community": 9,
+      "community": 0,
       "norm_label": "tuiheader()"
     },
     {
@@ -1314,7 +1323,7 @@
       "source_file": "src/components/tui-header.tsx",
       "source_location": "L53",
       "id": "components_tui_header_styles",
-      "community": 9,
+      "community": 0,
       "norm_label": "styles"
     },
     {
@@ -1494,7 +1503,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L1",
       "id": "src_theme_theme_provider_tsx",
-      "community": 9,
+      "community": 0,
       "norm_label": "theme-provider.tsx"
     },
     {
@@ -1503,7 +1512,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L5",
       "id": "theme_theme_provider_thememode",
-      "community": 9,
+      "community": 0,
       "norm_label": "thememode"
     },
     {
@@ -1512,7 +1521,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L6",
       "id": "theme_theme_provider_accenttheme",
-      "community": 9,
+      "community": 0,
       "norm_label": "accenttheme"
     },
     {
@@ -1521,7 +1530,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L8",
       "id": "theme_theme_provider_themecolors",
-      "community": 9,
+      "community": 0,
       "norm_label": "themecolors"
     },
     {
@@ -1530,7 +1539,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L26",
       "id": "theme_theme_provider_themecontexttype",
-      "community": 9,
+      "community": 0,
       "norm_label": "themecontexttype"
     },
     {
@@ -1539,7 +1548,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L36",
       "id": "theme_theme_provider_accent_colors",
-      "community": 9,
+      "community": 0,
       "norm_label": "accent_colors"
     },
     {
@@ -1548,7 +1557,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L45",
       "id": "theme_theme_provider_themecontext",
-      "community": 9,
+      "community": 0,
       "norm_label": "themecontext"
     },
     {
@@ -1557,7 +1566,7 @@
       "source_file": "src/theme/theme-provider.tsx",
       "source_location": "L47",
       "id": "theme_theme_provider_themeprovider",
-      "community": 9,
+      "community": 0,
       "norm_label": "themeprovider()"
     },
     {
@@ -2025,9 +2034,9 @@
       "source_file": "app.json",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "classscheduler_app_expo_ios",
-      "target": "classscheduler_app_ios_icon",
-      "confidence_score": 1.0
+      "target": "classscheduler_app_ios_icon"
     },
     {
       "relation": "contains",
@@ -2045,9 +2054,9 @@
       "source_file": "app.json",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "classscheduler_app_ios_icon",
-      "target": "classscheduler_app_icon_dark",
-      "confidence_score": 1.0
+      "target": "classscheduler_app_icon_dark"
     },
     {
       "relation": "contains",
@@ -2055,9 +2064,9 @@
       "source_file": "app.json",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "classscheduler_app_ios_icon",
-      "target": "classscheduler_app_icon_light",
-      "confidence_score": 1.0
+      "target": "classscheduler_app_icon_light"
     },
     {
       "relation": "contains",
@@ -2065,9 +2074,9 @@
       "source_file": "app.json",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "classscheduler_app_ios_icon",
-      "target": "classscheduler_app_icon_tinted",
-      "confidence_score": 1.0
+      "target": "classscheduler_app_icon_tinted"
     },
     {
       "relation": "contains",
@@ -3039,6 +3048,16 @@
       "confidence_score": 1.0,
       "source": "classscheduler_package_dependencies",
       "target": "classscheduler_package_dependencies_expo_status_bar"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "classscheduler_package_dependencies",
+      "target": "classscheduler_package_dependencies_expo_system_ui",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4796,5 +4815,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b7368caf28fdf68afc9f524bff86a8c38a596cdf"
+  "built_at_commit": "ed036586a26d30e3eb32ab3321e4c25488059656"
 }
