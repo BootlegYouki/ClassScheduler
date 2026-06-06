@@ -2,7 +2,7 @@
   "expo": {
     "name": "BootSked",
     "slug": "boot-sked",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -18,7 +18,7 @@
         "monochromeImage": "./assets/adaptive-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "versionCode": 2,
+      "versionCode": 3,
       "package": "com.bootlegyouki.bootsked",
       "permissions": [
         "android.permission.SCHEDULE_EXACT_ALARM",
