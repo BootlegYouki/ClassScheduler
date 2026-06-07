@@ -6,11 +6,11 @@
       "name": "BootSked",
       "bundleIdentifier": "com.bootlegyouki.bootsked",
       "developerName": "BootlegYouki",
-      "version": "1.0.11",
-      "versionDate": "2026-06-07T10:19:59Z",
-      "downloadURL": "https://github.com/BootlegYouki/ClassScheduler/releases/download/v1.0.11/BootSked.ipa",
+      "version": "1.0.13",
+      "versionDate": "2026-06-07T17:49:25Z",
+      "downloadURL": "https://github.com/BootlegYouki/BootSked/releases/download/v1.0.13/BootSked.ipa",
       "localizedDescription": "Brutalist template using Native components.",
-      "iconURL": "https://raw.githubusercontent.com/BootlegYouki/ClassScheduler/main/assets/icon.png",
+      "iconURL": "https://raw.githubusercontent.com/BootlegYouki/BootSked/main/assets/icon.png",
       "tintColor": "00E5FF",
       "size": 0
     }
