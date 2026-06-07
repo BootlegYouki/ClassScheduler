@@ -17,7 +17,7 @@ import { TuiButton } from './src/components/tui-button';
 import { TuiDrawer } from './src/components/tui-drawer';
 import { TuiInput } from './src/components/tui-input';
 import { Sun, Moon, Bell, BookOpen, Gamepad2, Dumbbell, MoreHorizontal, ChevronLeft, Calendar, Trash2 } from 'lucide-react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { TuiTimePicker } from './src/components/tui-time-picker';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { requestPermissions, syncNotifications, ScheduleItem } from './src/utils/notifications-service';
@@ -54,6 +54,56 @@ const DAYS_OF_WEEK = [
   { name: 'Friday', short: 'Fri', letter: 'F' },
   { name: 'Saturday', short: 'Sat', letter: 'S' },
 ];
+
+const PICKER_FADE_DURATION = 70;
+
+interface TimePickerModalProps {
+  visible: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
+
+const TimePickerModal: React.FC<TimePickerModalProps> = ({ visible, onClose, children }) => {
+  const [mounted, setMounted] = useState(visible);
+  const opacity = useRef(new Animated.Value(visible ? 1 : 0)).current;
+
+  useEffect(() => {
+    if (visible) {
+      setMounted(true);
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: PICKER_FADE_DURATION,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }).start();
+      return;
+    }
+
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: PICKER_FADE_DURATION,
+      easing: Easing.out(Easing.quad),
+      useNativeDriver: true,
+    }).start(({ finished }) => {
+      if (finished) setMounted(false);
+    });
+  }, [visible, opacity]);
+
+  if (!mounted) return null;
+
+  return (
+    <Modal
+      visible={mounted}
+      transparent={true}
+      animationType="none"
+      onRequestClose={onClose}
+    >
+      <Animated.View style={[styles.modalOverlay, { backgroundColor: 'rgba(0, 0, 0, 0.6)', opacity }]}>
+        {children}
+      </Animated.View>
+    </Modal>
+  );
+};
 
 const getHeaderBgColor = (theme: AccentTheme) => {
   switch (theme) {
@@ -372,6 +422,7 @@ const NeobrutalistSlider: React.FC<NeobrutalistSliderProps> = ({ value, onChange
 
 interface ScheduleCardProps {
   item: ScheduleItem;
+  index: number;
   highlightedItemId: string | null;
   exiting: boolean;
   onExitComplete: () => void;
@@ -381,6 +432,7 @@ interface ScheduleCardProps {
 
 const ScheduleCard: React.FC<ScheduleCardProps> = ({
   item,
+  index,
   highlightedItemId,
   exiting,
   onExitComplete,
@@ -389,6 +441,7 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
 }) => {
   const { colors, isDark } = useTheme();
   const cardRef = useRef<View>(null);
+  const enterAnim = useRef(new Animated.Value(0)).current;
   const exitAnim = useRef(new Animated.Value(0)).current;
 
   const getCategoryDetails = (category: string) => {
@@ -433,6 +486,18 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
   };
 
   useEffect(() => {
+    Animated.sequence([
+      Animated.delay(index * 60),
+      Animated.timing(enterAnim, {
+        toValue: 1,
+        duration: 250,
+        easing: Easing.out(Easing.back(1.1)),
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [enterAnim, index]);
+
+  useEffect(() => {
     if (!exiting) {
       exitAnim.setValue(0);
       return;
@@ -451,23 +516,37 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
     });
   }, [exiting, exitAnim, onExitComplete]);
 
+  const enterScale = enterAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+
+  const exitScale = exitAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+  });
+
+  const exitTranslateY = exitAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -2],
+  });
+
+  const exitOpacity = exitAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+  });
+
+  const combinedOpacity = Animated.multiply(enterAnim, exitOpacity);
+
   return (
     <View ref={cardRef} collapsable={false}>
       <Animated.View
         style={{
+          opacity: combinedOpacity,
           transform: [
-            {
-              scale: exitAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1, 0],
-              }),
-            },
-            {
-              translateY: exitAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, -2],
-              }),
-            },
+            { scale: enterScale },
+            { scale: exitScale },
+            { translateY: exitTranslateY },
           ],
         }}
       >
@@ -505,6 +584,45 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({
         </Pressable>
       </Animated.View>
     </View>
+  );
+};
+
+const AnimatedEmptyState: React.FC<{ colors: any }> = ({ colors }) => {
+  const scaleAnim = useRef(new Animated.Value(0)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 250,
+        easing: Easing.out(Easing.back(1.1)),
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 1,
+        duration: 200,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [scaleAnim, opacityAnim]);
+
+  return (
+    <Animated.View
+      style={[
+        styles.emptyContainer,
+        {
+          borderColor: colors.primary + '30',
+          transform: [{ scale: scaleAnim }],
+          opacity: opacityAnim,
+        },
+      ]}
+    >
+      <TuiText weight="bold" variant="muted" style={styles.emptyText}>
+        [ No activities scheduled ]
+      </TuiText>
+    </Animated.View>
   );
 };
 
@@ -775,12 +893,13 @@ function MainApp() {
     bounds: { x: number; y: number; width: number; height: number };
   } | null>(null);
   const [rescheduleTargetItem, setRescheduleTargetItem] = useState<ScheduleItem | null>(null);
-  const [rescheduleAnimatingItemId, setRescheduleAnimatingItemId] = useState<string | null>(null);
+  const [exitingItemId, setExitingItemId] = useState<string | null>(null);
   const pendingRescheduleRef = useRef<{
     itemId: string;
     day: string;
     time: string;
   } | null>(null);
+  const pendingDeleteItemIdRef = useRef<string | null>(null);
 
   // Reschedule Drawer States
   const [rescheduleDrawerVisible, setRescheduleDrawerVisible] = useState(false);
@@ -1048,7 +1167,8 @@ function MainApp() {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
-            setSchedule(prev => prev.filter(x => x.id !== item.id));
+            pendingDeleteItemIdRef.current = item.id;
+            setExitingItemId(item.id);
           }
         }
       ],
@@ -1116,7 +1236,7 @@ function MainApp() {
       day: rescheduleDay,
       time: timeStr,
     };
-    setRescheduleAnimatingItemId(targetItem.id);
+    setExitingItemId(targetItem.id);
 
     setRescheduleDrawerVisible(false);
     setContextMenuTarget(null);
@@ -1139,7 +1259,18 @@ function MainApp() {
     }));
 
     pendingRescheduleRef.current = null;
-    setRescheduleAnimatingItemId(null);
+    setExitingItemId(null);
+  };
+
+  const handleExitComplete = () => {
+    if (pendingDeleteItemIdRef.current) {
+      const deleteId = pendingDeleteItemIdRef.current;
+      setSchedule(prev => prev.filter(x => x.id !== deleteId));
+      pendingDeleteItemIdRef.current = null;
+      setExitingItemId(null);
+    } else if (pendingRescheduleRef.current) {
+      commitPendingReschedule();
+    }
   };
 
   const animateDrawerLayoutChange = () => {
@@ -1495,13 +1626,14 @@ function MainApp() {
 
 
         {filteredSchedule.length > 0 ? (
-          filteredSchedule.map((item) => (
+          filteredSchedule.map((item, index) => (
               <ScheduleCard
                 key={item.id}
                 item={item}
+                index={index}
                 highlightedItemId={highlightedItemId}
-                exiting={item.id === rescheduleAnimatingItemId}
-                onExitComplete={commitPendingReschedule}
+                exiting={item.id === exitingItemId}
+                onExitComplete={handleExitComplete}
                 onPress={() => handleEditItem(item)}
                 onLongPress={(bounds) => {
                   setContextMenuTarget({ item, bounds });
@@ -1509,11 +1641,7 @@ function MainApp() {
               />
           ))
         ) : (
-          <View style={[styles.emptyContainer, { borderColor: colors.primary + '30' }]}>
-            <TuiText weight="bold" variant="muted" style={styles.emptyText}>
-              [ No activities scheduled ]
-            </TuiText>
-          </View>
+          <AnimatedEmptyState colors={colors} />
         )}
       </ScrollView>
 
@@ -1583,7 +1711,7 @@ function MainApp() {
                     style={{ height: 56, paddingTop: 0, paddingBottom: 0, justifyContent: 'center' }}
                   >
                     <Pressable
-                      onPress={() => {
+                      onPressIn={() => {
                         setShowFromPicker(true);
                         setShowToPicker(false);
                       }}
@@ -1603,7 +1731,7 @@ function MainApp() {
                     style={{ height: 56, paddingTop: 0, paddingBottom: 0, justifyContent: 'center' }}
                   >
                     <Pressable
-                      onPress={() => {
+                      onPressIn={() => {
                         setShowToPicker(true);
                         setShowFromPicker(false);
                       }}
@@ -1713,44 +1841,14 @@ function MainApp() {
           </View>
         </View>
 
-        {/* Android DateTimePickers */}
-        {showFromPicker && Platform.OS === 'android' && (
-          <DateTimePicker
-            value={fromTime}
-            mode="time"
-            is24Hour={false}
-            display="default"
-            onChange={(event, date) => {
-              setShowFromPicker(false);
-              if (date) setFromTime(date);
-            }}
-          />
-        )}
-
-        {showToPicker && Platform.OS === 'android' && (
-          <DateTimePicker
-            value={toTime}
-            mode="time"
-            is24Hour={false}
-            display="default"
-            onChange={(event, date) => {
-              setShowToPicker(false);
-              if (date) setToTime(date);
-            }}
-          />
-        )}
-
-        {/* iOS Floating DateTimePickers */}
-        <Modal
-          visible={showFromPicker && Platform.OS === 'ios'}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setShowFromPicker(false)}
+        {/* Custom Floating DateTimePickers */}
+        <TimePickerModal
+          visible={showFromPicker}
+          onClose={() => setShowFromPicker(false)}
         >
-          <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0, 0, 0, 0.6)' }]}>
             <Pressable
               style={StyleSheet.absoluteFill}
-              onPress={() => setShowFromPicker(false)}
+              onPressIn={() => setShowFromPicker(false)}
             />
             <View style={styles.iosFloatingPickerWrapper}>
               <View
@@ -1793,39 +1891,22 @@ function MainApp() {
                   </TuiText>
                 </View>
 
-                <DateTimePicker
+                <TuiTimePicker
                   value={fromTime}
-                  mode="time"
-                  is24Hour={false}
-                  display="spinner"
-                  textColor={colors.foreground}
-                  onChange={(event, date) => {
-                    if (date) setFromTime(date);
-                  }}
+                  onChange={setFromTime}
                 />
 
-                <TuiButton
-                  variant="outline"
-                  onPress={() => setShowFromPicker(false)}
-                  style={{ marginTop: 12, width: '100%' }}
-                >
-                  Confirm
-                </TuiButton>
               </View>
             </View>
-          </View>
-        </Modal>
+        </TimePickerModal>
 
-        <Modal
-          visible={showToPicker && Platform.OS === 'ios'}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setShowToPicker(false)}
+        <TimePickerModal
+          visible={showToPicker}
+          onClose={() => setShowToPicker(false)}
         >
-          <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0, 0, 0, 0.6)' }]}>
             <Pressable
               style={StyleSheet.absoluteFill}
-              onPress={() => setShowToPicker(false)}
+              onPressIn={() => setShowToPicker(false)}
             />
             <View style={styles.iosFloatingPickerWrapper}>
               <View
@@ -1868,28 +1949,14 @@ function MainApp() {
                   </TuiText>
                 </View>
 
-                <DateTimePicker
+                <TuiTimePicker
                   value={toTime}
-                  mode="time"
-                  is24Hour={false}
-                  display="spinner"
-                  textColor={colors.foreground}
-                  onChange={(event, date) => {
-                    if (date) setToTime(date);
-                  }}
+                  onChange={setToTime}
                 />
 
-                <TuiButton
-                  variant="outline"
-                  onPress={() => setShowToPicker(false)}
-                  style={{ marginTop: 12, width: '100%' }}
-                >
-                  Confirm
-                </TuiButton>
               </View>
             </View>
-          </View>
-        </Modal>
+        </TimePickerModal>
       </TuiDrawer>
 
       {/* RESCHEDULE DRAWER */}
@@ -1927,8 +1994,7 @@ function MainApp() {
                 style={{ height: 56, paddingTop: 0, paddingBottom: 0, justifyContent: 'center' }}
               >
                   <Pressable
-                    onPress={() => {
-                      animateDrawerLayoutChange();
+                    onPressIn={() => {
                       setShowRescheduleFromPicker(true);
                       setShowRescheduleToPicker(false);
                     }}
@@ -1948,8 +2014,7 @@ function MainApp() {
                 style={{ height: 56, paddingTop: 0, paddingBottom: 0, justifyContent: 'center' }}
               >
                   <Pressable
-                    onPress={() => {
-                      animateDrawerLayoutChange();
+                    onPressIn={() => {
                       setShowRescheduleToPicker(true);
                       setShowRescheduleFromPicker(false);
                     }}
@@ -2003,50 +2068,14 @@ function MainApp() {
           </View>
         </View>
 
-        {/* Android Reschedule DateTimePickers */}
-        {showRescheduleFromPicker && Platform.OS === 'android' && (
-          <DateTimePicker
-            value={rescheduleFromTime}
-            mode="time"
-            is24Hour={false}
-            display="default"
-            onChange={(event, date) => {
-              setShowRescheduleFromPicker(false);
-              if (date) {
-                animateDrawerLayoutChange();
-                setRescheduleFromTime(date);
-              }
-            }}
-          />
-        )}
-
-        {showRescheduleToPicker && Platform.OS === 'android' && (
-          <DateTimePicker
-            value={rescheduleToTime}
-            mode="time"
-            is24Hour={false}
-            display="default"
-            onChange={(event, date) => {
-              setShowRescheduleToPicker(false);
-              if (date) {
-                animateDrawerLayoutChange();
-                setRescheduleToTime(date);
-              }
-            }}
-          />
-        )}
-
-        {/* iOS Floating DateTimePickers for Reschedule */}
-        <Modal
-          visible={showRescheduleFromPicker && Platform.OS === 'ios'}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setShowRescheduleFromPicker(false)}
+        {/* Custom Floating DateTimePickers for Reschedule */}
+        <TimePickerModal
+          visible={showRescheduleFromPicker}
+          onClose={() => setShowRescheduleFromPicker(false)}
         >
-          <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0, 0, 0, 0.6)' }]}>
             <Pressable
               style={StyleSheet.absoluteFill}
-              onPress={() => setShowRescheduleFromPicker(false)}
+              onPressIn={() => setShowRescheduleFromPicker(false)}
             />
             <View style={styles.iosFloatingPickerWrapper}>
               <View
@@ -2089,42 +2118,25 @@ function MainApp() {
                   </TuiText>
                 </View>
 
-              <DateTimePicker
-                value={rescheduleFromTime}
-                mode="time"
-                is24Hour={false}
-                display="spinner"
-                textColor={colors.foreground}
-                onChange={(event, date) => {
-                  if (date) {
+                <TuiTimePicker
+                  value={rescheduleFromTime}
+                  onChange={(date) => {
                     animateDrawerLayoutChange();
                     setRescheduleFromTime(date);
-                  }
-                }}
-              />
+                  }}
+                />
 
-                <TuiButton
-                  variant="outline"
-                  onPress={() => setShowRescheduleFromPicker(false)}
-                  style={{ marginTop: 12, width: '100%' }}
-                >
-                  Confirm
-                </TuiButton>
               </View>
             </View>
-          </View>
-        </Modal>
+        </TimePickerModal>
 
-        <Modal
-          visible={showRescheduleToPicker && Platform.OS === 'ios'}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setShowRescheduleToPicker(false)}
+        <TimePickerModal
+          visible={showRescheduleToPicker}
+          onClose={() => setShowRescheduleToPicker(false)}
         >
-          <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0, 0, 0, 0.6)' }]}>
             <Pressable
               style={StyleSheet.absoluteFill}
-              onPress={() => setShowRescheduleToPicker(false)}
+              onPressIn={() => setShowRescheduleToPicker(false)}
             />
             <View style={styles.iosFloatingPickerWrapper}>
               <View
@@ -2167,31 +2179,17 @@ function MainApp() {
                   </TuiText>
                 </View>
 
-                <DateTimePicker
+                <TuiTimePicker
                   value={rescheduleToTime}
-                  mode="time"
-                  is24Hour={false}
-                  display="spinner"
-                  textColor={colors.foreground}
-                  onChange={(event, date) => {
-                    if (date) {
-                      animateDrawerLayoutChange();
-                      setRescheduleToTime(date);
-                    }
+                  onChange={(date) => {
+                    animateDrawerLayoutChange();
+                    setRescheduleToTime(date);
                   }}
                 />
 
-                <TuiButton
-                  variant="outline"
-                  onPress={() => setShowRescheduleToPicker(false)}
-                  style={{ marginTop: 12, width: '100%' }}
-                >
-                  Confirm
-                </TuiButton>
               </View>
             </View>
-          </View>
-        </Modal>
+        </TimePickerModal>
       </TuiDrawer>
 
       {contextMenuTarget && (

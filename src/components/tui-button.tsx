@@ -6,6 +6,7 @@ import { TuiText } from './tui-text';
 interface TuiButtonProps {
   children: React.ReactNode;
   onPress?: () => void;
+  onPressIn?: () => void;
   style?: ViewStyle;
   variant?: 'default' | 'accent' | 'destructive' | 'outline';
   disabled?: boolean;
@@ -14,6 +15,7 @@ interface TuiButtonProps {
 export const TuiButton: React.FC<TuiButtonProps> = ({
   children,
   onPress,
+  onPressIn,
   style,
   variant = 'default',
   disabled = false,
@@ -62,6 +64,7 @@ export const TuiButton: React.FC<TuiButtonProps> = ({
     <Pressable
       disabled={disabled}
       onPress={onPress}
+      onPressIn={onPressIn}
       style={({ pressed }) => [
         styles.button,
         {
