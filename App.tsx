@@ -189,6 +189,22 @@ function MainApp() {
     return weekdays[new Date().getDay()];
   });
 
+  // Animated values for iOS-style deck transition (parallax scaleout)
+  const drawerProgressAnim = useRef(new Animated.Value(0)).current;
+
+  const screenScaleAnim = drawerProgressAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0.93],
+  });
+  const screenTranslateYAnim = drawerProgressAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 12],
+  });
+  const screenBorderRadiusAnim = drawerProgressAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 16],
+  });
+
   // Add Class Drawer States
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -549,8 +565,21 @@ function MainApp() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View style={{ flex: 1, backgroundColor: '#000000' }}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
+
+      <Animated.View
+        style={{
+          flex: 1,
+          backgroundColor: colors.background,
+          transform: [
+            { scale: screenScaleAnim },
+            { translateY: screenTranslateYAnim },
+          ],
+          borderRadius: screenBorderRadiusAnim,
+          overflow: 'hidden',
+        }}
+      >
 
       {/* TOP FIXED PANEL: Header + Weekday Selector */}
       <View
@@ -715,12 +744,14 @@ function MainApp() {
         onNavigate={handleNavigate}
         startAnimation={true}
       />
+      </Animated.View>
 
       {/* ADD/EDIT CLASS MODAL DRAWER */}
       <TuiDrawer
         visible={drawerVisible}
         onClose={handleCloseDrawer}
         title={editingClassId ? "EDIT CLASS SCHEDULE" : "ADD CLASS SCHEDULE"}
+        progressAnim={drawerProgressAnim}
       >
         <TuiInput
           label="Subject Name"
