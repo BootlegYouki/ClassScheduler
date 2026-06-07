@@ -78,16 +78,11 @@ jobs:
         with:
           ref: ${{ needs.bump-version.outputs.sha }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -96,7 +91,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
       - name: Expo Prebuild (Generate Android folder)
         run: npx expo prebuild --platform android --clean
@@ -129,19 +124,14 @@ jobs:
         with:
           ref: ${{ needs.bump-version.outputs.sha }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
       - name: Expo Prebuild (Generate iOS folder)
         run: npx expo prebuild --platform ios --clean
