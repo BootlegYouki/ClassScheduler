@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Modal, Pressable, Animated, Dimensions, Keyboard, Easing, PanResponder } from 'react-native';
+import { View, StyleSheet, Modal, Pressable, Animated, Keyboard, Easing, PanResponder, KeyboardEvent } from 'react-native';
 import { useTheme } from '../theme/theme-provider';
 import { TuiText } from './tui-text';
-
-const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 const SPRING_CONFIG_OPEN = {
   stiffness: 300,
@@ -42,6 +40,7 @@ export const TuiDrawer: React.FC<TuiDrawerProps> = ({
   const [cardWidth, setCardWidth] = useState(0);
   const [cardHeight, setCardHeight] = useState(300);
   const [legendWidth, setLegendWidth] = useState(0);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const activeAnim = useRef(progressAnim || new Animated.Value(0)).current;
   const nudgeAnim = useRef(new Animated.Value(0)).current;
@@ -85,7 +84,7 @@ export const TuiDrawer: React.FC<TuiDrawerProps> = ({
           return;
         }
 
-        const { cardHeight: currentHeight, onClose: currentOnClose } = latest.current;
+        const { onClose: currentOnClose } = latest.current;
 
         if (gestureState.dy > 100 || gestureState.vy > 0.5) {
           Animated.timing(activeAnim, {
@@ -122,15 +121,38 @@ export const TuiDrawer: React.FC<TuiDrawerProps> = ({
     extrapolate: 'clamp',
   });
 
-  // Sync nudge animation when keyboardOffset changes
+  // Sync nudge animation when keyboard height changes.
   useEffect(() => {
+    const onKeyboardShow = (e: KeyboardEvent) => {
+      setKeyboardHeight(e?.endCoordinates?.height ?? 0);
+    };
+
+    const onKeyboardHide = () => {
+      setKeyboardHeight(0);
+    };
+
+    const subs = [
+      Keyboard.addListener('keyboardWillShow', onKeyboardShow),
+      Keyboard.addListener('keyboardDidShow', onKeyboardShow),
+      Keyboard.addListener('keyboardWillHide', onKeyboardHide),
+      Keyboard.addListener('keyboardDidHide', onKeyboardHide),
+      Keyboard.addListener('keyboardWillChangeFrame', onKeyboardShow),
+    ];
+
+    return () => {
+      subs.forEach((sub) => sub.remove());
+    };
+  }, []);
+
+  useEffect(() => {
+    const targetOffset = -Math.max(keyboardOffset, keyboardHeight);
     Animated.timing(nudgeAnim, {
-      toValue: keyboardOffset,
-      duration: 150,
+      toValue: targetOffset,
+      duration: 180,
       easing: Easing.out(Easing.quad),
       useNativeDriver: true,
     }).start();
-  }, [keyboardOffset]);
+  }, [keyboardOffset, keyboardHeight, nudgeAnim]);
 
   // Sync animations with visible state changes
   useEffect(() => {
